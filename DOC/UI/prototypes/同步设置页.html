@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>山记事 App - 同步设置</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #5271FF;
+            --accent-color: #FF7052;
+            --bg-color: #F5F7FA;
+            --text-color: #333333;
+        }
+        body {
+            font-family: 'Roboto', 'San Francisco', 'PingFang SC', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding-top: constant(safe-area-inset-top); 
+            padding-top: env(safe-area-inset-top); 
+        }
+        .iphone-16-pro-frame {
+            width: 375px; 
+            height: 812px; 
+            border-radius: 44px; 
+            box-shadow: 0px 0px 30px rgba(0,0,0,0.2);
+            background: #1c1c1e; 
+            padding: 18px; 
+            overflow: hidden; 
+            position: relative;
+        }
+        .iphone-screen {
+            background: white; 
+            width: 100%;
+            height: 100%;
+            border-radius: 26px; 
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .status-bar { 
+            height: 44px; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000; 
+            color: black; 
+        }
+        .status-bar .time {
+            font-weight: 600;
+        }
+        .dynamic-island { 
+            position: absolute;
+            top: 10px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px; 
+            height: 30px; 
+            background: #000;
+            border-radius: 20px;
+            z-index: 1100; 
+        }
+        .app-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            background-color: var(--bg-color); 
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .primary-color { color: var(--primary-color); }
+        .primary-bg { background-color: var(--primary-color); }
+
+        .app-top-bar { 
+            padding-top: 44px; 
+            background-color: white; 
+        }
+
+        .sync-section {
+            background-color: white;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+        .sync-item {
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .sync-item:not(:last-child) {
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .sync-item .icon-container {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        .sync-item .content {
+            margin-left: 0.75rem;
+            flex-grow: 1;
+        }
+        .sync-item .arrow-icon {
+            color: #d1d5db;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 3rem;
+            height: 1.5rem;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #e5e7eb;
+            transition: .4s;
+            border-radius: 9999px;
+        }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 1.25rem;
+            width: 1.25rem;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .toggle-slider {
+            background-color: var(--primary-color);
+        }
+        input:checked + .toggle-slider:before {
+            transform: translateX(1.5rem);
+        }
+    </style>
+</head>
+<body>
+    <div class="iphone-16-pro-frame">
+        <div class="iphone-screen">
+            <div class="dynamic-island"></div>
+            <div class="status-bar">
+                <span class="time">9:41</span>
+                <div>
+                    <i class="fas fa-signal" style="font-size: 0.8rem;"></i>
+                    <i class="fas fa-wifi" style="margin-left: 4px; font-size: 0.8rem;"></i>
+                    <i class="fas fa-battery-full" style="margin-left: 4px; font-size: 0.8rem;"></i>
+                </div>
+            </div>
+            
+            <!-- 同步设置页 内容 -->
+            <div class="app-content py-2">
+                <div class="h-full flex flex-col">
+                    <!-- 顶部栏 -->
+                    <div class="app-top-bar px-6 pt-12 pb-4 flex items-center justify-between">
+                        <button class="text-gray-500"><i class="fas fa-arrow-left"></i></button>
+                        <h1 class="text-lg font-bold">数据同步</h1>
+                        <div class="w-6"></div>
+                    </div>
+                    
+                    <!-- 同步状态 -->
+                    <div class="px-6 py-2 mb-4">
+                        <div class="bg-green-50 text-green-700 rounded-lg p-4 flex items-center">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            <span>所有数据已同步</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 同步服务列表 -->
+                    <div class="flex-1 overflow-y-auto px-6">
+                        <h2 class="text-sm font-medium text-gray-500 mb-2">云服务</h2>
+                        
+                        <div class="sync-section">
+                            <div class="sync-item">
+                                <div class="flex items-center">
+                                    <div class="icon-container bg-blue-500">
+                                        <i class="fab fa-apple"></i>
+                                    </div>
+                                    <span class="ml-3 font-medium">iCloud</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="mr-2 text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full">已连接</span>
+                                    <i class="fas fa-chevron-right text-gray-300 arrow-icon"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="sync-item">
+                                <div class="flex items-center">
+                                    <div class="icon-container bg-gray-100">
+                                        <i class="fab fa-google-drive text-gray-500"></i>
+                                    </div>
+                                    <span class="ml-3 font-medium">Google Drive</span>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-300 arrow-icon"></i>
+                            </div>
+                            
+                            <div class="sync-item">
+                                <div class="flex items-center">
+                                    <div class="icon-container bg-gray-100">
+                                        <i class="fab fa-dropbox text-gray-500"></i>
+                                    </div>
+                                    <span class="ml-3 font-medium">Dropbox</span>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-300 arrow-icon"></i>
+                            </div>
+                            
+                            <div class="sync-item">
+                                <div class="flex items-center">
+                                    <div class="icon-container bg-gray-100">
+                                        <i class="fab fa-microsoft text-gray-500"></i>
+                                    </div>
+                                    <span class="ml-3 font-medium">OneDrive</span>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-300 arrow-icon"></i>
+                            </div>
+                        </div>
+                        
+                        <h2 class="text-sm font-medium text-gray-500 mb-2">其他服务</h2>
+                        
+                        <div class="sync-section">
+                            <div class="sync-item">
+                                <div class="flex items-center">
+                                    <div class="icon-container bg-gray-100">
+                                        <i class="fas fa-server text-gray-500"></i>
+                                    </div>
+                                    <span class="ml-3 font-medium">WebDAV</span>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-300 arrow-icon"></i>
+                            </div>
+                            
+                            <div class="sync-item">
+                                <div class="flex items-center">
+                                    <div class="icon-container bg-gray-100">
+                                        <i class="fas fa-wifi text-gray-500"></i>
+                                    </div>
+                                    <span class="ml-3 font-medium">本地网络</span>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-300 arrow-icon"></i>
+                            </div>
+                        </div>
+                        
+                        <h2 class="text-sm font-medium text-gray-500 mb-2">同步设置</h2>
+                        
+                        <div class="sync-section">
+                            <div class="sync-item">
+                                <span class="font-medium">自动同步</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="sync-item">
+                                <span class="font-medium">仅在Wi-Fi下同步</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="sync-item">
+                                <span class="font-medium">同步频率</span>
+                                <div class="flex items-center">
+                                    <span class="text-gray-500">数据变更时</span>
+                                    <i class="fas fa-chevron-right ml-2 text-gray-300 arrow-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full py-3 rounded-lg primary-bg text-white font-medium mb-4">
+                            立即同步
+                        </button>
+                        
+                        <button class="w-full py-3 rounded-lg border border-gray-300 text-gray-700 font-medium">
+                            导入/导出数据
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

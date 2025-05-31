@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>山记事 App - 任务创建/编辑</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #5271FF;
+            --accent-color: #FF7052;
+            --bg-color: #F5F7FA;
+            --text-color: #333333;
+            /* Add other necessary color variables if used */
+        }
+        body {
+            font-family: 'Roboto', 'San Francisco', 'PingFang SC', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding-top: constant(safe-area-inset-top); 
+            padding-top: env(safe-area-inset-top); 
+        }
+        .iphone-16-pro-frame {
+            width: 375px; 
+            height: 812px; 
+            border-radius: 44px; 
+            box-shadow: 0px 0px 30px rgba(0,0,0,0.2);
+            background: #1c1c1e; 
+            padding: 18px; 
+            overflow: hidden; 
+            position: relative;
+        }
+        .iphone-screen {
+            background: white; 
+            width: 100%;
+            height: 100%;
+            border-radius: 26px; 
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .status-bar { 
+            height: 44px; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000; 
+            color: black; 
+        }
+         .status-bar .time {
+            font-weight: 600;
+        }
+        .dynamic-island { 
+            position: absolute;
+            top: 10px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px; 
+            height: 30px; 
+            background: #000;
+            border-radius: 20px;
+            z-index: 1100; 
+        }
+        .app-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            background-color: white; /* This page had white background in original app-container */
+            position: relative;
+            display: flex; /* Added for flex column layout */
+            flex-direction: column; /* Added for flex column layout */
+        }
+        
+        .primary-color { color: var(--primary-color); }
+        .primary-bg { background-color: var(--primary-color); }
+
+        .app-top-bar { 
+            padding-top: 44px; 
+            background-color: white; 
+        }
+
+        /* Specific styles for elements within this page */
+        .form-section {
+            background-color: white;
+             border-radius: 0.75rem; /* rounded-xl */
+             overflow: hidden;
+             margin-bottom: 1.5rem; /* mb-6 */
+         }
+         .form-item {
+             padding: 1rem; /* p-4 */
+             display: flex;
+             align-items: center;
+             justify-content: space-between;
+         }
+          .form-item:not(:last-child) {
+              border-bottom: 1px solid #e5e7eb; /* border-b border-gray-100 */
+          }
+          .form-item .icon {
+              color: #6b7280; /* gray-500 */
+              width: 1.5rem; /* w-6 */
+          }
+           .form-item .label {
+               margin-left: 0.75rem; /* ml-3 */
+               flex-grow: 1;
+           }
+            .form-item .value {
+                 display: flex;
+                 align-items: center;
+                 color: var(--primary-color);
+            }
+             .form-item .value .arrow-icon {
+                 margin-left: 0.5rem; /* ml-2 */
+                 color: #d1d5db; /* gray-300 */
+             }
+         
+        
+    </style>
+</head>
+<body>
+    <div class="iphone-16-pro-frame">
+        <div class="iphone-screen">
+            <div class="dynamic-island"></div>
+            <div class="status-bar">
+                <span class="time">9:41</span>
+                <div>
+                    <i class="fas fa-signal" style="font-size: 0.8rem;"></i>
+                    <i class="fas fa-wifi" style="margin-left: 4px; font-size: 0.8rem;"></i>
+                    <i class="fas fa-battery-full" style="margin-left: 4px; font-size: 0.8rem;"></i>
+                </div>
+            </div>
+            
+            <!-- 任务创建/编辑页 内容 -->
+            <div class="app-content px-6 py-2">
+                <!-- 顶部栏 -->
+                <div class="app-top-bar pt-12 pb-4 flex items-center justify-between">
+                    <button class="text-gray-500">取消</button>
+                    <h1 class="text-lg font-bold">新任务</h1>
+                    <button class="text-primary-color font-medium">保存</button>
+                </div>
+                
+                <!-- 表单内容 -->
+                <div class="flex-1 overflow-y-auto">
+                    <div class="mb-6">
+                        <input type="text" placeholder="任务标题" class="w-full text-lg font-medium border-0 border-b-2 border-gray-200 pb-2 focus:outline-none focus:border-primary-color">
+                    </div>
+                    
+                    <div class="mb-6">
+                        <textarea placeholder="添加任务描述..." class="w-full h-24 border-0 border-b-2 border-gray-200 pb-2 resize-none focus:outline-none focus:border-primary-color"></textarea>
+                    </div>
+                    
+                    <div class="form-section">
+                        <div class="form-item">
+                            <div class="flex items-center">
+                                <i class="far fa-calendar-alt text-gray-500 icon"></i>
+                                <span class="ml-3 label">截止日期</span>
+                            </div>
+                            <div class="value">
+                                <span>今天</span>
+                                <i class="fas fa-chevron-right text-gray-300 arrow-icon"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="form-item">
+                            <div class="flex items-center">
+                                <i class="far fa-clock text-gray-500 icon"></i>
+                                <span class="ml-3 label">提醒时间</span>
+                            </div>
+                            <div class="value">
+                                <span>14:00</span>
+                                <i class="fas fa-chevron-right text-gray-300 arrow-icon"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="form-item">
+                            <div class="flex items-center">
+                                <i class="fas fa-flag text-gray-500 icon"></i>
+                                <span class="ml-3 label">优先级</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="w-3 h-3 rounded-full bg-red-500 mr-1"></span>
+                                <span class="text-gray-700">高</span>
+                                <i class="fas fa-chevron-right ml-2 text-gray-300 arrow-icon"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="form-item">
+                            <div class="flex items-center">
+                                <i class="fas fa-list text-gray-500 icon"></i>
+                                <span class="ml-3 label">所属清单</span>
+                            </div>
+                            <div class="value">
+                                <span>工作</span>
+                                <i class="fas fa-chevron-right text-gray-300 arrow-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <div class="form-item">
+                            <div class="flex items-center">
+                                <i class="fas fa-redo text-gray-500 icon"></i>
+                                <span class="ml-3 label">重复
+                                </span>
+                            </div>
+                            <div class="flex items-center text-gray-500">
+                                <span>无</span>
+                                <i class="fas fa-chevron-right ml-2 text-gray-300 arrow-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

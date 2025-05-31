@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>山记事 App - 清单管理</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #5271FF;
+            --accent-color: #FF7052;
+            --bg-color: #F5F7FA;
+            --text-color: #333333;
+            /* Add other necessary color variables if used */
+        }
+        body {
+            font-family: 'Roboto', 'San Francisco', 'PingFang SC', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding-top: constant(safe-area-inset-top); 
+            padding-top: env(safe-area-inset-top); 
+        }
+        .iphone-16-pro-frame {
+            width: 375px; 
+            height: 812px; 
+            border-radius: 44px; 
+            box-shadow: 0px 0px 30px rgba(0,0,0,0.2);
+            background: #1c1c1e; 
+            padding: 18px; 
+            overflow: hidden; 
+            position: relative;
+        }
+        .iphone-screen {
+            background: white; 
+            width: 100%;
+            height: 100%;
+            border-radius: 26px; 
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .status-bar { 
+            height: 44px; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000; 
+            color: black; 
+        }
+         .status-bar .time {
+            font-weight: 600;
+        }
+        .dynamic-island { 
+            position: absolute;
+            top: 10px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px; 
+            height: 30px; 
+            background: #000;
+            border-radius: 20px;
+            z-index: 1100; 
+        }
+        .app-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            background-color: var(--bg-color); 
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .primary-color { color: var(--primary-color); }
+
+        .app-top-bar { 
+            padding-top: 44px; 
+            background-color: white; 
+        }
+
+        /* Specific styles for elements within this page */
+         .list-section {
+             background-color: white;
+             border-radius: 0.75rem; /* rounded-xl */
+             overflow: hidden;
+             margin-bottom: 1rem; /* mb-4 */
+             margin-left: 1.5rem; /* px-6 from original parent */
+             margin-right: 1.5rem; /* px-6 from original parent */
+         }
+         .list-item {
+             padding: 1rem; /* p-4 */
+             display: flex;
+             align-items: center;
+             justify-content: space-between;
+         }
+          .list-item:not(:last-child) {
+              border-bottom: 1px solid #e5e7eb; /* border-b border-gray-100 */
+          }
+          .list-item .icon-container {
+              width: 2.5rem; /* w-10 */
+              height: 2.5rem; /* h-10 */
+              border-radius: 9999px; /* rounded-full */
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: white;
+          }
+           .list-item .content {
+               margin-left: 0.75rem; /* ml-3 */
+               flex-grow: 1;
+           }
+            .list-item .content h3 {
+                font-weight: 500; /* font-medium */
+            }
+             .list-item .content p {
+                 font-size: 0.75rem; /* text-xs */
+                 color: #6b7280; /* gray-500 */
+             }
+            .list-item .arrow-icon {
+                color: #d1d5db; /* gray-300 */
+            }
+
+    </style>
+</head>
+<body>
+    <div class="iphone-16-pro-frame">
+        <div class="iphone-screen">
+            <div class="dynamic-island"></div>
+            <div class="status-bar">
+                <span class="time">9:41</span>
+                <div>
+                    <i class="fas fa-signal" style="font-size: 0.8rem;"></i>
+                    <i class="fas fa-wifi" style="margin-left: 4px; font-size: 0.8rem;"></i>
+                    <i class="fas fa-battery-full" style="margin-left: 4px; font-size: 0.8rem;"></i>
+                </div>
+            </div>
+            
+            <!-- 清单管理页 内容 -->
+            <div class="app-content py-2">
+                <div class="h-full flex flex-col">
+                    <!-- 顶部栏 -->
+                    <div class="app-top-bar px-6 pt-12 pb-4 flex items-center justify-between">
+                        <button class="text-gray-500"><i class="fas fa-arrow-left"></i></button>
+                        <h1 class="text-lg font-bold">清单</h1>
+                        <button class="text-primary-color"><i class="fas fa-plus"></i></button>
+                    </div>
+                    
+                    <!-- 清单列表 -->
+                    <div class="flex-1 overflow-y-auto">
+                        <div class="list-section">
+                            <div class="list-item">
+                                <div class="flex items-center">
+                                    <div class="icon-container bg-blue-500">
+                                        <i class="fas fa-briefcase"></i>
+                                    </div>
+                                    <div class="ml-3">
+                                        <h3 class="font-medium">工作</h3>
+                                        <p class="text-xs text-gray-500">8项任务</p>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-300 arrow-icon"></i>
+                            </div>
+                            
+                            <div class="list-item">
+                                <div class="flex items-center">
+                                    <div class="icon-container bg-green-500">
+                                        <i class="fas fa-home"></i>
+                                    </div>
+                                    <div class="ml-3">
+                                        <h3 class="font-medium">个人</h3>
+                                        <p class="text-xs text-gray-500">5项任务</p>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-300 arrow-icon"></i>
+                            </div>
+                            
+                            <div class="list-item">
+                                <div class="flex items-center">
+                                    <div class="icon-container bg-purple-500">
+                                        <i class="fas fa-book"></i>
+                                    </div>
+                                    <div class="ml-3">
+                                        <h3 class="font-medium">学习</h3>
+                                        <p class="text-xs text-gray-500">3项任务</p>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-300 arrow-icon"></i>
+                            </div>
+                            
+                            <div class="list-item">
+                                <div class="flex items-center">
+                                    <div class="icon-container bg-orange-500">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </div>
+                                    <div class="ml-3">
+                                        <h3 class="font-medium">购物</h3>
+                                        <p class="text-xs text-gray-500">2项任务</p>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-300 arrow-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>山记事 App - 搜索结果</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #5271FF;
+            --accent-color: #FF7052;
+            --bg-color: #F5F7FA;
+            --text-color: #333333;
+            --high-priority: #E53935;
+        }
+        body {
+            font-family: 'Roboto', 'San Francisco', 'PingFang SC', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding-top: constant(safe-area-inset-top); 
+            padding-top: env(safe-area-inset-top); 
+        }
+        .iphone-16-pro-frame {
+            width: 375px; 
+            height: 812px; 
+            border-radius: 44px; 
+            box-shadow: 0px 0px 30px rgba(0,0,0,0.2);
+            background: #1c1c1e; 
+            padding: 18px; 
+            overflow: hidden; 
+            position: relative;
+        }
+        .iphone-screen {
+            background: white; 
+            width: 100%;
+            height: 100%;
+            border-radius: 26px; 
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .status-bar { 
+            height: 44px; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000; 
+            color: black; 
+        }
+        .status-bar .time {
+            font-weight: 600;
+        }
+        .dynamic-island { 
+            position: absolute;
+            top: 10px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px; 
+            height: 30px; 
+            background: #000;
+            border-radius: 20px;
+            z-index: 1100; 
+        }
+        .app-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            background-color: var(--bg-color); 
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .primary-color { color: var(--primary-color); }
+        .primary-border { border-color: var(--primary-color); }
+
+        .app-top-bar { 
+            padding-top: 44px; 
+            background-color: white; 
+        }
+
+        .search-bar {
+            background-color: #f3f4f6;
+            border-radius: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            display: flex;
+            align-items: center;
+        }
+        .search-bar input {
+            background: transparent;
+            border: none;
+            outline: none;
+            flex-grow: 1;
+            margin-left: 0.5rem;
+        }
+        .search-result-section {
+            margin-bottom: 1.5rem;
+        }
+        .search-result-item {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .highlight {
+            background-color: #fef08a;
+        }
+    </style>
+</head>
+<body>
+    <div class="iphone-16-pro-frame">
+        <div class="iphone-screen">
+            <div class="dynamic-island"></div>
+            <div class="status-bar">
+                <span class="time">9:41</span>
+                <div>
+                    <i class="fas fa-signal" style="font-size: 0.8rem;"></i>
+                    <i class="fas fa-wifi" style="margin-left: 4px; font-size: 0.8rem;"></i>
+                    <i class="fas fa-battery-full" style="margin-left: 4px; font-size: 0.8rem;"></i>
+                </div>
+            </div>
+            
+            <!-- 搜索结果页 内容 -->
+            <div class="app-content">
+                <!-- 搜索栏 -->
+                <div class="app-top-bar px-6 pt-12 pb-4">
+                    <div class="search-bar">
+                        <i class="fas fa-search text-gray-400"></i>
+                        <input type="text" placeholder="搜索" value="设计" class="flex-1">
+                        <button class="text-gray-400"><i class="fas fa-times"></i></button>
+                    </div>
+                </div>
+                
+                <!-- 搜索选项卡 -->
+                <div class="px-6 flex space-x-4 border-b border-gray-100 bg-white">
+                    <button class="py-3 border-b-2 border-primary font-medium primary-color">全部</button>
+                    <button class="py-3 text-gray-500">任务</button>
+                    <button class="py-3 text-gray-500">笔记</button>
+                </div>
+                
+                <!-- 搜索结果 -->
+                <div class="flex-1 overflow-y-auto px-6 py-4">
+                    <div class="search-result-section">
+                        <h2 class="font-medium text-gray-600 mb-3">任务</h2>
+                        
+                        <div class="search-result-item flex items-center">
+                            <div class="w-6 h-6 border-2 border-gray-300 rounded-full mr-3"></div>
+                            <div class="flex-1">
+                                <h3 class="font-medium">完成山记事App<span class="highlight">设计</span>文稿</h3>
+                                <div class="flex items-center mt-1 text-sm text-gray-500">
+                                    <i class="far fa-clock mr-1"></i>
+                                    <span>明天 11:30</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="search-result-section">
+                        <h2 class="font-medium text-gray-600 mb-3">笔记</h2>
+                        
+                        <div class="search-result-item">
+                            <h3 class="font-medium mb-2">产品<span class="highlight">设计</span>思路整理</h3>
+                            <p class="text-sm text-gray-600 line-clamp-2">山记事App的核心优势在于本地优先存储与灵活的同步机制。与市面上大多数笔记应用不同，我们更注重用户数据隐私和控制权...</p>
+                            <div class="flex items-center mt-3 text-xs text-gray-400">
+                                <span>2023-05-26</span>
+                                <span class="mx-2">·</span>
+                                <span>项目笔记</span>
+                            </div>
+                        </div>
+                        
+                        <div class="search-result-item">
+                            <h3 class="font-medium mb-2">UI<span class="highlight">设计</span>参考</h3>
+                            <p class="text-sm text-gray-600 line-clamp-2">Material Design风格的待办应用界面参考...</p>
+                            <div class="flex items-center mt-3 text-xs text-gray-400">
+                                <span>2023-05-24</span>
+                                <span class="mx-2">·</span>
+                                <span>项目笔记</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

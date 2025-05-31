@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>山记事 App - 启动页</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #5271FF;
+            --accent-color: #FF7052;
+            --bg-color: #F5F7FA;
+            --text-color: #333333;
+        }
+        body {
+            font-family: 'Roboto', 'San Francisco', 'PingFang SC', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .iphone-16-pro-frame {
+            width: 375px; /* iPhone 14/15 Pro width, adjust if iPhone 16 Pro dimensions are known */
+            height: 812px; /* iPhone 14/15 Pro height, adjust */
+            border-radius: 44px; /* Approximate */
+            box-shadow: 0px 0px 30px rgba(0,0,0,0.2);
+            background: #1c1c1e; /* Dark color for the frame itself */
+            padding: 18px; /* Notch and bezel area */
+            overflow: hidden; /* Clip content to frame */
+            position: relative; /* For notch and dynamic island */
+        }
+        .iphone-screen {
+            background: white;
+            width: 100%;
+            height: 100%;
+            border-radius: 26px; /* Inner screen radius */
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .status-bar { /* Simplified status bar */
+            height: 44px; /* Approximate height for notch area */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            color: black; /* Or white depending on screen content */
+        }
+         .status-bar .time {
+            font-weight: 600;
+        }
+        .dynamic-island { /* Placeholder for dynamic island */
+            position: absolute;
+            top: 10px; /* Adjust as needed */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px; /* Approximate */
+            height: 30px; /* Approximate */
+            background: #000;
+            border-radius: 20px;
+            z-index: 110;
+        }
+        .app-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            /* Remove app-container specific styles if they conflict */
+        }
+
+        .primary-color { color: var(--primary-color); }
+        /* Add other necessary utility styles from the original file if they are not covered by Tailwind */
+
+    </style>
+</head>
+<body>
+    <div class="iphone-16-pro-frame">
+        <div class="iphone-screen">
+            <div class="dynamic-island"></div>
+            <div class="status-bar">
+                <span class="time">9:41</span>
+                <div>
+                    <i class="fas fa-signal" style="font-size: 0.8rem;"></i>
+                    <i class="fas fa-wifi" style="margin-left: 4px; font-size: 0.8rem;"></i>
+                    <i class="fas fa-battery-full" style="margin-left: 4px; font-size: 0.8rem;"></i>
+                </div>
+            </div>
+            <!-- 启动页 内容 -->
+            <div class="app-content flex items-center justify-center">
+                <div class="text-center">
+                    <div class="text-6xl primary-color mb-4"><i class="fas fa-mountain"></i></div>
+                    <h1 class="text-3xl font-bold primary-color mb-2">山记事</h1>
+                    <p class="text-gray-500">简单记录，自在生活</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

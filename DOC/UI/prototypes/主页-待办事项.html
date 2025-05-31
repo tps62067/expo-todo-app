@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>山记事 App - 主页 - 待办事项</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #5271FF;
+            --accent-color: #FF7052;
+            --bg-color: #F5F7FA;
+            --text-color: #333333;
+            --high-priority: #E53935;
+            --medium-priority: #FB8C00;
+            --low-priority: #43A047;
+        }
+        body {
+            font-family: 'Roboto', 'San Francisco', 'PingFang SC', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding-top: constant(safe-area-inset-top); /* iOS safe area */
+            padding-top: env(safe-area-inset-top); /* iOS safe area */
+        }
+        .iphone-16-pro-frame {
+            width: 375px; 
+            height: 812px; 
+            border-radius: 44px; 
+            box-shadow: 0px 0px 30px rgba(0,0,0,0.2);
+            background: #1c1c1e; 
+            padding: 18px; 
+            overflow: hidden; 
+            position: relative;
+        }
+        .iphone-screen {
+            background: white; /* Default background for screen content area */
+            width: 100%;
+            height: 100%;
+            border-radius: 26px; 
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .status-bar { 
+            height: 44px; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000; /* Ensure status bar is on top */
+            color: black; 
+        }
+         .status-bar .time {
+            font-weight: 600;
+        }
+        .dynamic-island { 
+            position: absolute;
+            top: 10px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px; 
+            height: 30px; 
+            background: #000;
+            border-radius: 20px;
+            z-index: 1100; /* Ensure dynamic island is on top */
+        }
+        .app-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            /* padding-top: 44px; /* Account for status bar */
+            background-color: var(--bg-color); /* Match original app-container bg */
+            position: relative; /* For FAB positioning context */
+        }
+        
+        .primary-color { color: var(--primary-color); }
+        .accent-color { color: var(--accent-color); }
+        .primary-bg { background-color: var(--primary-color); }
+        .accent-bg { background-color: var(--accent-color); }
+        .high-priority { color: var(--high-priority); }
+        .medium-priority { color: var(--medium-priority); }
+        .low-priority { color: var(--low-priority); }
+        .priority-dot-high { background-color: var(--high-priority); }
+        .priority-dot-medium { background-color: var(--medium-priority); }
+        .priority-dot-low { background-color: var(--low-priority); }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #777;
+            font-size: 0.75rem;
+            flex: 1; /* Distribute space evenly */
+        }
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+        .fab-button {
+            position: absolute; /* Changed from fixed to absolute for app-content context */
+            bottom: 80px; /* Adjust as needed, considering the new nav bar height */
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 2px 10px rgba(82, 113, 255, 0.4);
+            z-index: 900; /* Below status bar/island, but above most content */
+        }
+        /* Specific styles for elements within this page if needed */
+        .app-top-bar { /* Added for consistent top bar spacing */
+            padding-top: 44px; /* Space for status bar */
+             background-color: white; /* Match original */
+        }
+        .app-bottom-nav {
+             background-color: white; /* Match original */
+             border-top: 1px solid #e5e7eb; /* gray-100 */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="iphone-16-pro-frame">
+        <div class="iphone-screen">
+            <div class="dynamic-island"></div>
+            <div class="status-bar">
+                <span class="time">9:41</span>
+                <div>
+                    <i class="fas fa-signal" style="font-size: 0.8rem;"></i>
+                    <i class="fas fa-wifi" style="margin-left: 4px; font-size: 0.8rem;"></i>
+                    <i class="fas fa-battery-full" style="margin-left: 4px; font-size: 0.8rem;"></i>
+                </div>
+            </div>
+            
+            <!-- 主页 - 待办事项 内容 -->
+            <div class="app-content"> 
+                <div class="h-full flex flex-col">
+                    <!-- 顶部栏 -->
+                    <div class="app-top-bar px-6 pt-12 pb-4 flex items-center justify-between">
+                        <h1 class="text-xl font-bold">待办事项</h1>
+                        <div class="flex space-x-4">
+                            <button><i class="fas fa-search text-gray-500"></i></button>
+                            <button><i class="fas fa-ellipsis-v text-gray-500"></i></button>
+                        </div>
+                    </div>
+                    
+                    <!-- 分类选项卡 -->
+                    <div class="px-6 flex space-x-4 border-b border-gray-100 bg-white">
+                        <button class="py-3 border-b-2 border-primary font-medium primary-color">今天</button>
+                        <button class="py-3 text-gray-500">全部</button>
+                        <button class="py-3 text-gray-500">已完成</button>
+                    </div>
+                    
+                    <!-- 任务列表 -->
+                    <div class="flex-1 overflow-y-auto px-6 py-4">
+                        <!-- 日期标题 -->
+                        <div class="flex items-center mb-4">
+                            <h2 class="font-medium text-gray-600">今天</h2>
+                            <div class="ml-2 text-xs bg-gray-100 rounded-full px-2 py-0.5 text-gray-500">5项</div>
+                        </div>
+                        
+                        <!-- 任务项 -->
+                        <div class="bg-white rounded-xl shadow-sm mb-3 p-4 flex items-center">
+                            <div class="w-6 h-6 border-2 border-gray-300 rounded-full mr-3"></div>
+                            <div class="flex-1">
+                                <h3 class="font-medium">完成山记事App原型设计</h3>
+                                <div class="flex items-center mt-1 text-sm text-gray-500">
+                                    <i class="far fa-clock mr-1"></i>
+                                    <span>今天 14:00</span>
+                                    <span class="mx-2">·</span>
+                                    <span class="w-2 h-2 rounded-full priority-dot-high"></span>
+                                    <span class="ml-1">高优先级</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl shadow-sm mb-3 p-4 flex items-center">
+                            <div class="w-6 h-6 border-2 border-gray-300 rounded-full mr-3"></div>
+                            <div class="flex-1">
+                                <h3 class="font-medium">准备项目演示文稿</h3>
+                                <div class="flex items-center mt-1 text-sm text-gray-500">
+                                    <i class="far fa-clock mr-1"></i>
+                                    <span>今天 16:30</span>
+                                    <span class="mx-2">·</span>
+                                    <span class="w-2 h-2 rounded-full priority-dot-medium"></span>
+                                    <span class="ml-1">中优先级</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl shadow-sm mb-3 p-4 flex items-center">
+                            <div class="w-6 h-6 border-2 border-gray-300 rounded-full mr-3 flex items-center justify-center">
+                                <i class="fas fa-check text-xs text-gray-300"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-medium line-through text-gray-400">回复客户邮件</h3>
+                                <div class="flex items-center mt-1 text-sm text-gray-400">
+                                    <i class="far fa-check-circle mr-1"></i>
+                                    <span>已完成</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl shadow-sm mb-3 p-4 flex items-center">
+                            <div class="w-6 h-6 border-2 border-gray-300 rounded-full mr-3"></div>
+                            <div class="flex-1">
+                                <h3 class="font-medium">购买办公用品</h3>
+                                <div class="flex items-center mt-1 text-sm text-gray-500">
+                                    <i class="far fa-clock mr-1"></i>
+                                    <span>今天 20:00</span>
+                                    <span class="mx-2">·</span>
+                                    <span class="w-2 h-2 rounded-full priority-dot-low"></span>
+                                    <span class="ml-1">低优先级</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl shadow-sm mb-3 p-4 flex items-center">
+                            <div class="w-6 h-6 border-2 border-gray-300 rounded-full mr-3"></div>
+                            <div class="flex-1">
+                                <h3 class="font-medium">阅读《深入理解计算机系统》第三章</h3>
+                                <div class="flex items-center mt-1 text-sm text-gray-500">
+                                    <i class="far fa-clock mr-1"></i>
+                                    <span>今天 22:00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 浮动按钮 -->
+                    <div class="fab-button">
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    
+                    <!-- 底部导航 -->
+                    <div class="app-bottom-nav h-16 flex justify-around items-center px-6">
+                        <div class="nav-item active">
+                            <i class="fas fa-tasks text-xl mb-1"></i>
+                            <span>待办事项</span>
+                        </div>
+                        <div class="nav-item">
+                            <i class="far fa-sticky-note text-xl mb-1"></i>
+                            <span>笔记</span>
+                        </div>
+                        <div class="nav-item">
+                            <i class="fas fa-cog text-xl mb-1"></i>
+                            <span>设置</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

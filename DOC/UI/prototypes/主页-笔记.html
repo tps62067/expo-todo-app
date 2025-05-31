@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>山记事 App - 主页 - 笔记</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #5271FF;
+            --accent-color: #FF7052;
+            --bg-color: #F5F7FA;
+            --text-color: #333333;
+            /* Add other necessary color variables if used in notes section */
+        }
+        body {
+            font-family: 'Roboto', 'San Francisco', 'PingFang SC', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding-top: constant(safe-area-inset-top); 
+            padding-top: env(safe-area-inset-top); 
+        }
+        .iphone-16-pro-frame {
+            width: 375px; 
+            height: 812px; 
+            border-radius: 44px; 
+            box-shadow: 0px 0px 30px rgba(0,0,0,0.2);
+            background: #1c1c1e; 
+            padding: 18px; 
+            overflow: hidden; 
+            position: relative;
+        }
+        .iphone-screen {
+            background: white; 
+            width: 100%;
+            height: 100%;
+            border-radius: 26px; 
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .status-bar { 
+            height: 44px; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000; 
+            color: black; 
+        }
+         .status-bar .time {
+            font-weight: 600;
+        }
+        .dynamic-island { 
+            position: absolute;
+            top: 10px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px; 
+            height: 30px; 
+            background: #000;
+            border-radius: 20px;
+            z-index: 1100; 
+        }
+        .app-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            background-color: var(--bg-color); 
+            position: relative;
+             padding-bottom: 16px; /* Add some padding at the bottom before the nav */
+        }
+        
+        .primary-color { color: var(--primary-color); }
+        .primary-bg { background-color: var(--primary-color); }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #777;
+            font-size: 0.75rem;
+            flex: 1;
+        }
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+        .fab-button {
+            position: absolute;
+            bottom: 16px; /* Adjust based on nav bar height */
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 2px 10px rgba(82, 113, 255, 0.4);
+            z-index: 900; 
+        }
+        .app-top-bar { 
+            padding-top: 44px; 
+            background-color: white; 
+        }
+        .app-bottom-nav {
+             background-color: white; 
+             border-top: 1px solid #e5e7eb; 
+             height: 60px; /* Ensure consistent height */
+             padding-bottom: constant(safe-area-inset-bottom); /* iOS safe area */
+             padding-bottom: env(safe-area-inset-bottom); /* iOS safe area */
+        }
+        .note-list { 
+            padding: 0 24px; /* px-6 from original */
+            padding-top: 8px; /* py-2 from original */
+        }
+        .note-item {
+             background-color: white;
+             border-radius: 0.75rem; /* rounded-xl */
+             box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+             margin-bottom: 1rem; /* mb-4 */
+             padding: 1rem; /* p-4 */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="iphone-16-pro-frame">
+        <div class="iphone-screen">
+            <div class="dynamic-island"></div>
+            <div class="status-bar">
+                <span class="time">9:41</span>
+                <div>
+                    <i class="fas fa-signal" style="font-size: 0.8rem;"></i>
+                    <i class="fas fa-wifi" style="margin-left: 4px; font-size: 0.8rem;"></i>
+                    <i class="fas fa-battery-full" style="margin-left: 4px; font-size: 0.8rem;"></i>
+                </div>
+            </div>
+            
+            <!-- 主页 - 笔记 内容 -->
+            <div class="app-content">
+                <div class="h-full flex flex-col">
+                    <!-- 顶部栏 -->
+                    <div class="app-top-bar px-6 pt-12 pb-4 flex items-center justify-between">
+                        <h1 class="text-xl font-bold">笔记</h1>
+                        <div class="flex space-x-4">
+                            <button><i class="fas fa-search text-gray-500"></i></button>
+                            <button><i class="fas fa-ellipsis-v text-gray-500"></i></button>
+                        </div>
+                    </div>
+                    
+                    <!-- 视图切换 -->
+                    <div class="px-6 flex justify-between items-center mb-4 bg-white py-4"> <!-- Added bg-white py-4 for correct layout -->
+                        <div class="flex space-x-3">
+                            <button class="py-2 px-3 bg-gray-100 rounded-lg text-sm font-medium">全部笔记</button>
+                            <button class="py-2 px-3 text-sm text-gray-500">笔记本</button>
+                        </div>
+                        <div>
+                            <button class="text-gray-500"><i class="fas fa-th-large"></i></button>
+                        </div>
+                    </div>
+                    
+                    <!-- 笔记列表 -->
+                    <div class="flex-1 overflow-y-auto px-6 py-2">
+                        <div class="bg-white rounded-xl shadow-sm mb-4 p-4">
+                            <h3 class="font-medium mb-2">产品设计思路整理</h3>
+                            <p class="text-sm text-gray-600 line-clamp-2">山记事App的核心优势在于本地优先存储与灵活的同步机制。与市面上大多数笔记应用不同，我们更注重用户数据隐私和控制权...</p>
+                            <div class="flex items-center mt-3 text-xs text-gray-400">
+                                <span>2023-05-26</span>
+                                <span class="mx-2">·</span>
+                                <span>项目笔记</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl shadow-sm mb-4 p-4">
+                            <h3 class="font-medium mb-2">架构设计参考资料</h3>
+                            <p class="text-sm text-gray-600 line-clamp-2">1. Clean Architecture by Uncle Bob
+2. Flutter实战指南
+3. 数据同步算法比较...</p>
+                            <div class="flex items-center mt-3 text-xs text-gray-400">
+                                <span>2023-05-25</span>
+                                <span class="mx-2">·</span>
+                                <span>学习笔记</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl shadow-sm mb-4 p-4">
+                            <h3 class="font-medium mb-2">周末购物清单</h3>
+                            <p class="text-sm text-gray-600 line-clamp-2">- 牙膏
+- 洗发水
+- 纸巾
+- 水果（苹果、香蕉）
+- 蔬菜（西红柿、黄瓜）...</p>
+                            <div class="flex items-center mt-3 text-xs text-gray-400">
+                                <span>2023-05-24</span>
+                                <span class="mx-2">·</span>
+                                <span>生活</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl shadow-sm mb-4 p-4">
+                            <h3 class="font-medium mb-2">会议记录：产品需求讨论</h3>
+                            <p class="text-sm text-gray-600 line-clamp-2">与团队讨论了山记事App的核心需求和目标用户群体。大家一致认为本地优先存储策略很有吸引力，特别是对于注重隐私的用户...</p>
+                            <div class="flex items-center mt-3 text-xs text-gray-400">
+                                <span>2023-05-23</span>
+                                <span class="mx-2">·</span>
+                                <span>项目笔记</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 浮动按钮 -->
+                    <div class="fab-button">
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    
+                    <!-- 底部导航 -->
+                    <div class="app-bottom-nav h-16 flex justify-around items-center px-6">
+                        <div class="nav-item">
+                            <i class="far fa-tasks text-xl mb-1"></i>
+                            <span>待办事项</span>
+                        </div>
+                        <div class="nav-item active">
+                            <i class="fas fa-sticky-note text-xl mb-1"></i>
+                            <span>笔记</span>
+                        </div>
+                        <div class="nav-item">
+                            <i class="fas fa-cog text-xl mb-1"></i>
+                            <span>设置</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

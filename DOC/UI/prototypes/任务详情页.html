@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>山记事 App - 任务详情</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #5271FF;
+            --accent-color: #FF7052;
+            --bg-color: #F5F7FA;
+            --text-color: #333333;
+            --high-priority: #E53935;
+            /* Add other necessary color variables if used */
+        }
+        body {
+            font-family: 'Roboto', 'San Francisco', 'PingFang SC', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding-top: constant(safe-area-inset-top); 
+            padding-top: env(safe-area-inset-top); 
+        }
+        .iphone-16-pro-frame {
+            width: 375px; 
+            height: 812px; 
+            border-radius: 44px; 
+            box-shadow: 0px 0px 30px rgba(0,0,0,0.2);
+            background: #1c1c1e; 
+            padding: 18px; 
+            overflow: hidden; 
+            position: relative;
+        }
+        .iphone-screen {
+            background: white; 
+            width: 100%;
+            height: 100%;
+            border-radius: 26px; 
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .status-bar { 
+            height: 44px; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000; 
+            color: black; 
+        }
+         .status-bar .time {
+            font-weight: 600;
+        }
+        .dynamic-island { 
+            position: absolute;
+            top: 10px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px; 
+            height: 30px; 
+            background: #000;
+            border-radius: 20px;
+            z-index: 1100; 
+        }
+        .app-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            background-color: white; /* Match original app-container bg for this page */
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .primary-color { color: var(--primary-color); }
+
+        .app-top-bar { 
+            padding-top: 44px; 
+            background-color: white; 
+        }
+
+        /* Specific styles for elements within this page */
+        .detail-section {
+             background-color: white;
+             border-radius: 0.75rem; /* rounded-xl */
+             overflow: hidden;
+             margin-bottom: 1.5rem; /* mb-6 */
+         }
+         .detail-item {
+             padding: 1rem; /* p-4 */
+             display: flex;
+             align-items: center;
+             justify-content: space-between;
+         }
+          .detail-item:not(:last-child) {
+              border-bottom: 1px solid #e5e7eb; /* border-b border-gray-100 */
+          }
+          .detail-item .icon {
+              color: #6b7280; /* gray-500 */
+              width: 1.5rem; /* w-6 */
+          }
+           .detail-item .label {
+               margin-left: 0.5rem; /* ml-2 */
+               flex-grow: 1;
+           }
+            .detail-item .value {
+                 color: #4b5563; /* gray-700 */
+            }
+
+    </style>
+</head>
+<body>
+    <div class="iphone-16-pro-frame">
+        <div class="iphone-screen">
+            <div class="dynamic-island"></div>
+            <div class="status-bar">
+                <span class="time">9:41</span>
+                <div>
+                    <i class="fas fa-signal" style="font-size: 0.8rem;"></i>
+                    <i class="fas fa-wifi" style="margin-left: 4px; font-size: 0.8rem;"></i>
+                    <i class="fas fa-battery-full" style="margin-left: 4px; font-size: 0.8rem;"></i>
+                </div>
+            </div>
+            
+            <!-- 任务详情页 内容 -->
+            <div class="app-content px-6 py-2">
+                <!-- 顶部栏 -->
+                <div class="app-top-bar pt-12 pb-4 flex items-center justify-between">
+                    <button class="text-gray-500"><i class="fas fa-arrow-left"></i></button>
+                    <div class="flex space-x-4">
+                        <button><i class="far fa-edit text-gray-500"></i></button>
+                        <button><i class="far fa-trash-alt text-gray-500"></i></button>
+                    </div>
+                </div>
+                
+                <!-- 内容区域 -->
+                <div class="flex-1 overflow-y-auto">
+                    <h1 class="text-xl font-bold mb-2">完成山记事App原型设计</h1>
+                    
+                    <div class="flex items-center mb-6 text-sm">
+                        <span class="mr-3 flex items-center">
+                            <i class="far fa-calendar-alt text-gray-500 mr-1"></i>
+                            <span class="text-gray-700">今天 14:00</span>
+                        </span>
+                        <span class="flex items-center">
+                            <span class="w-2 h-2 rounded-full bg-red-500 mr-1 priority-dot-high"></span> <!-- Added priority-dot-high class -->
+                            <span class="text-gray-700">高优先级</span>
+                        </span>
+                    </div>
+                    
+                    <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                        <p class="text-gray-700">按照设计规范完成山记事App的全部原型设计，包括待办事项、笔记和设置等核心页面。确保界面美观且符合Material Design风格。</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <div class="detail-item">
+                            <div class="flex items-center">
+                                <i class="fas fa-list text-gray-500 icon"></i>
+                                <span class="ml-2 label">所属清单</span>
+                            </div>
+                            <span class="text-gray-700 value">工作</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <div class="flex items-center">
+                                <i class="far fa-bell text-gray-500 icon"></i>
+                                <span class="ml-2 label">提醒</span>
+                            </div>
+                            <span class="text-gray-700 value">今天 13:30</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <div class="flex items-center">
+                                <i class="far fa-clock text-gray-500 icon"></i>
+                                <span class="ml-2 label">创建时间</span>
+                            </div>
+                            <span class="text-gray-700 value">今天 09:15</span>
+                        </div>
+                    </div>
+                    
+                    <button class="w-full py-3 rounded-lg border-2 border-primary-color text-primary-color font-medium mb-4"> <!-- Added mb-4 to match original spacing -->
+                        标记为已完成
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>山记事 App - 引导页</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #5271FF;
+            --accent-color: #FF7052;
+            --bg-color: #F5F7FA;
+            --text-color: #333333;
+        }
+        body {
+            font-family: 'Roboto', 'San Francisco', 'PingFang SC', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .iphone-16-pro-frame {
+            width: 375px; 
+            height: 812px; 
+            border-radius: 44px; 
+            box-shadow: 0px 0px 30px rgba(0,0,0,0.2);
+            background: #1c1c1e; 
+            padding: 18px; 
+            overflow: hidden; 
+            position: relative;
+        }
+        .iphone-screen {
+            background: white;
+            width: 100%;
+            height: 100%;
+            border-radius: 26px; 
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .status-bar { 
+            height: 44px; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            color: black; 
+        }
+         .status-bar .time {
+            font-weight: 600;
+        }
+        .dynamic-island { 
+            position: absolute;
+            top: 10px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px; 
+            height: 30px; 
+            background: #000;
+            border-radius: 20px;
+            z-index: 110;
+        }
+        .app-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex; /* Added for centering content */
+            flex-direction: column; /* Added for centering content */
+        }
+        .primary-bg { background-color: var(--primary-color); }
+        .primary-color { color: var(--primary-color); }
+        /* Add other necessary utility styles from the original file if they are not covered by Tailwind */
+    </style>
+</head>
+<body>
+    <div class="iphone-16-pro-frame">
+        <div class="iphone-screen">
+            <div class="dynamic-island"></div>
+            <div class="status-bar">
+                <span class="time">9:41</span>
+                <div>
+                    <i class="fas fa-signal" style="font-size: 0.8rem;"></i>
+                    <i class="fas fa-wifi" style="margin-left: 4px; font-size: 0.8rem;"></i>
+                    <i class="fas fa-battery-full" style="margin-left: 4px; font-size: 0.8rem;"></i>
+                </div>
+            </div>
+            <!-- 引导页 内容 -->
+            <div class="app-content bg-white">
+                <div class="h-full flex flex-col">
+                    <!-- 轮播指示器 -->
+                    <div class="flex justify-center mt-8 pt-8"> <!-- Added pt-8 to push content below status bar -->
+                        <div class="w-2 h-2 rounded-full bg-gray-300 mx-1"></div>
+                        <div class="w-2 h-2 rounded-full primary-bg mx-1"></div>
+                        <div class="w-2 h-2 rounded-full bg-gray-300 mx-1"></div>
+                    </div>
+                    
+                    <!-- 内容区域 -->
+                    <div class="flex-1 flex flex-col items-center justify-center px-8">
+                        <div class="text-8xl primary-color mb-8"><i class="fas fa-clipboard-list"></i></div>
+                        <h2 class="text-2xl font-bold mb-4">高效管理待办事项</h2>
+                        <p class="text-gray-500 text-center mb-12">轻松创建任务，设置优先级和截止日期，让您的生活更有条理</p>
+                    </div>
+                    
+                    <!-- 按钮区域 -->
+                    <div class="px-8 mb-12">
+                        <button class="w-full py-3 rounded-lg primary-bg text-white font-medium">下一步</button>
+                        <button class="w-full py-3 mt-4 text-gray-500 font-medium">跳过</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

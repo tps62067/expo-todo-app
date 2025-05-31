@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>山记事 App - 原型预览</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Roboto', 'San Francisco', 'PingFang SC', sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 20px;
+        }
+        .prototype-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .prototype-item {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .prototype-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #1f2937;
+        }
+        .prototype-frame {
+            width: 375px;
+            height: 812px;
+            border: none;
+            border-radius: 44px;
+            margin: 0 auto;
+            display: block;
+            background: #1c1c1e;
+        }
+        .header {
+            padding: 20px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border-radius: 12px;
+        }
+        .header h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin: 0;
+        }
+        .header p {
+            color: #6b7280;
+            margin: 10px 0 0 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>山记事 App 原型预览</h1>
+        <p>以下展示了所有页面的原型设计，每个原型都采用了 iPhone 16 Pro 的样式规范</p>
+    </div>
+
+    <div class="prototype-grid">
+        <div class="prototype-item">
+            <div class="prototype-title">启动页</div>
+            <iframe src="启动页.html" class="prototype-frame"></iframe>
+        </div>
+        
+        <div class="prototype-item">
+            <div class="prototype-title">引导页</div>
+            <iframe src="引导页.html" class="prototype-frame"></iframe>
+        </div>
+        
+        <div class="prototype-item">
+            <div class="prototype-title">主页 - 待办事项</div>
+            <iframe src="主页-待办事项.html" class="prototype-frame"></iframe>
+        </div>
+        
+        <div class="prototype-item">
+            <div class="prototype-title">主页 - 笔记</div>
+            <iframe src="主页-笔记.html" class="prototype-frame"></iframe>
+        </div>
+        
+        <div class="prototype-item">
+            <div class="prototype-title">任务创建/编辑页</div>
+            <iframe src="任务创建-编辑页.html" class="prototype-frame"></iframe>
+        </div>
+        
+        <div class="prototype-item">
+            <div class="prototype-title">任务详情页</div>
+            <iframe src="任务详情页.html" class="prototype-frame"></iframe>
+        </div>
+        
+        <div class="prototype-item">
+            <div class="prototype-title">清单管理页</div>
+            <iframe src="清单管理页.html" class="prototype-frame"></iframe>
+        </div>
+        
+        <div class="prototype-item">
+            <div class="prototype-title">笔记本管理页</div>
+            <iframe src="笔记本管理页.html" class="prototype-frame"></iframe>
+        </div>
+        
+        <div class="prototype-item">
+            <div class="prototype-title">笔记编辑页</div>
+            <iframe src="笔记编辑页.html" class="prototype-frame"></iframe>
+        </div>
+        
+        <div class="prototype-item">
+            <div class="prototype-title">搜索结果页</div>
+            <iframe src="搜索结果页.html" class="prototype-frame"></iframe>
+        </div>
+        
+        <div class="prototype-item">
+            <div class="prototype-title">同步设置页</div>
+            <iframe src="同步设置页.html" class="prototype-frame"></iframe>
+        </div>
+    </div>
+</body>
+</html> 
