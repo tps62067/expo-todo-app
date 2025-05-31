@@ -1,104 +1,50 @@
-# Expo Todo App 📝
+# Welcome to your Expo app 👋
 
-一个基于Expo的待办事项和笔记应用，包含任务管理、笔记功能和数据同步。
+This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-## 功能特性
+## Get started
 
-- 📋 任务管理：创建、编辑、删除待办事项
-- 📝 笔记功能：支持富文本笔记编辑
-- 🏷️ 标签系统：为任务和笔记添加标签
-- 📊 项目管理：按项目组织任务和笔记
-- 🔍 搜索功能：快速查找任务和笔记
-- 📱 跨平台：支持iOS、Android和Web
-- 💾 本地存储：使用SQLite数据库
-
-## 技术栈
-
-- **框架**: Expo SDK 53
-- **语言**: TypeScript
-- **UI**: React Native
-- **路由**: Expo Router
-- **数据库**: SQLite (expo-sqlite)
-- **状态管理**: React Context
-- **样式**: StyleSheet
-
-## 开始使用
-
-1. 安装依赖
+1. Install dependencies
 
    ```bash
    npm install
    ```
 
-2. 启动应用
+2. Start the app
 
    ```bash
    npx expo start
    ```
 
-3. 选择运行平台
-   - 按 `a` 在Android模拟器中打开
-   - 按 `i` 在iOS模拟器中打开
-   - 按 `w` 在Web浏览器中打开
-   - 扫描二维码在Expo Go中打开
+In the output, you'll find options to open the app in a
 
-## 项目结构
+- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
+- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-```
-├── app/                 # 应用页面 (Expo Router)
-│   ├── (tabs)/         # 标签页导航
-│   ├── note/           # 笔记相关页面
-│   └── task/           # 任务相关页面
-├── lib/                # 核心业务逻辑
-│   ├── database/       # 数据库层
-│   ├── services/       # 服务层
-│   ├── repositories/   # 仓储层
-│   └── models/         # 数据模型
-├── src/                # UI组件和工具
-│   ├── components/     # React组件
-│   ├── hooks/          # 自定义Hooks
-│   └── utils/          # 工具函数
-└── assets/             # 静态资源
-```
+You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-## 开发说明
+## Get a fresh project
 
-### 数据库架构
+When you're ready, run:
 
-应用使用SQLite数据库，包含以下主要表：
-- `tasks` - 任务表
-- `notes` - 笔记表
-- `projects` - 项目表
-- `tags` - 标签表
-- `notebooks` - 笔记本表
-
-### 架构设计
-
-采用分层架构：
-- **表示层**: React Native组件
-- **服务层**: 业务逻辑处理
-- **仓储层**: 数据访问抽象
-- **数据层**: SQLite数据库
-
-## 构建和部署
-
-### 开发构建
 ```bash
-npm run android  # Android开发构建
-npm run ios      # iOS开发构建
-npm run web      # Web开发构建
+npm run reset-project
 ```
 
-### 生产构建
-```bash
-eas build --platform android
-eas build --platform ios
-```
+This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
 
-## 贡献
+## Learn more
 
-欢迎提交Issue和Pull Request来改进这个项目。
+To learn more about developing your project with Expo, look at the following resources:
 
-## 许可证
+- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
+- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
 
-本项目采用MIT许可证。
+## Join the community
+
+Join our community of developers creating universal apps.
+
+- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
+- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
